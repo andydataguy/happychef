@@ -52,7 +52,11 @@ class RecipeResource(Resource):
         return recipe.data, HTTPStatus.OK
 
     """This put method gets the recipe details from the client request using request.get_json
-    and updates the recipe object. Then it returns the HTTP status code 200 OK"""
+    and updates the recipe object. Then it returns the HTTP status code 200 OK
+    
+    Great example of a n00b!3 code smell. I have no idea how to fix the
+    issue where a few of the data points populate as lists as opposed to 
+    strings/integers. Will be fun to figure that out later."""
 
     def put(self, recipe_id):
         data = request.get_json()
@@ -63,12 +67,24 @@ class RecipeResource(Resource):
             return {"message": "recipe not found"}, HTTPStatus.NOT_FOUND
 
         recipe.name = data["name"]
-        recipe.description = data["description"],
-        recipe.num_of_servings = data["num_of_servings"],
-        recipe.cook_time = data["cook_time"],
+        recipe.description = data["description"]
+        recipe.num_of_servings = data["num_of_servings"]
+        recipe.cook_time = data["cook_time"]
         recipe.directions = data["directions"]
 
         return recipe.data, HTTPStatus.OK
+
+    """Write a script that deletes a recipe once called"""
+
+    def delete(self, recipe_id):
+        recipe = next((recipe for recipe in recipe_list if recipe.id == recipe_id), None)
+
+        if recipe is None:
+            return {"message": "recipe not found"}, HTTPStatus.NOT_FOUND
+
+        recipe_list.remove(recipe)
+
+        return {}, HTTPStatus.OK
 
 class RecipePublishResource(Resource):
 
