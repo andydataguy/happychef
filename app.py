@@ -4,7 +4,7 @@ from flask_restful import Api
 
 from config import Config
 from extensions import db
-# from models.user import User
+from models.user import User
 from resources.recipe import RecipeListResource, RecipeResource, RecipePublishResource
 
 def create_app():
